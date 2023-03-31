@@ -1,0 +1,8 @@
+{% if messages %}
+    {% for mesaj in messages %}
+            <div class="alert alert-primary text-center">
+                {{mesaj}}
+            </div>
+    {% endfor %}
+{% else %}
+{% endif %}

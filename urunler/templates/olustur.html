@@ -1,0 +1,13 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <form action="" method="POST" enctype="multipart/form-data" class="w-50 m-auto border p-4">
+            {% csrf_token %}
+            {{form}}
+            {{form.media}}
+            <input type="submit" value="Oluştur" class="btn btn-primary mt-2">
+        </form>
+    </div>
+{% endblock content %}

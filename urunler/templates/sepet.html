@@ -1,0 +1,45 @@
+{% extends "index.html" %}
+{% load static %}
+{% load humanize %}
+
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            {% for urun in urunler %}
+                <div class="card mt-5">
+                    <div class="row">
+                        <div class="col-4 px-0">
+                            <img src="{{urun.urun.resim.url}}" width="100%" height="200" alt="">
+                        </div>
+                        <div class="col-8">
+                            <div class="d-flex justify-content-between">
+                                <h3>{{urun.urun.isim}}</h3>
+                                <form action="" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="sil" value="{{urun.id}}">
+                                    <input type="submit" value="Sil" class="btn btn-primary mt-2 me-2">
+                                </form>
+                            </div>
+                            
+                            <p>{{urun.urun.aciklama|safe}}</p>
+                            <p>{{urun.urun.no}}TL</p>
+                            <p>Adet : {{urun.adet}}</p>
+                            <p>Toplam Fiyat : {{urun.toplam}}TL</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            <p>Toplam Fiyat = {{toplam|intcomma}}TL</p>
+        </div>
+        <form action="" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="toplam" value="{{toplam}}">
+            <input type="submit" value="Ödeme Yap" class="btn btn-primary">
+        </form>
+    </div>
+  {% endblock content %}
+
+{% block title %}
+    <title>Neos Ticaret Ürün sayfası</title>
+{% endblock title %}

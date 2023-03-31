@@ -1,0 +1,89 @@
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+            <a 
+            {% if request.path == '/' %}
+                class="nav-link active"
+            {% else %}
+                class="nav-link"
+            {% endif %}
+             aria-current="page" href="/">Anasayfa</a>
+            </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#">{{request.user}}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Çıkış Yap</a>
+                </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'sepet' %}">Sepetim ({{sepetAdet}})</a>
+                </li>
+                <li class="nav-item">
+                    <a
+                    {% if request.path == '/olustur/' %}
+                        class="nav-link active"
+                    {% else %}
+                        class="nav-link"
+                    {% endif %}
+                     href="{% url 'olustur' %}">Oluştur</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a
+                    {% if request.path == '/login/' %}
+                        class="nav-link active"
+                    {% else %}
+                        class="nav-link"
+                    {% endif %}
+                     href="{% url 'login' %}">Giriş Yap</a>
+                </li>
+                <li class="nav-item">
+                    <a
+                    {% if request.path == '/register/' %}
+                        class="nav-link active"
+                    {% else %}
+                        class="nav-link"
+                    {% endif %}
+                     href="{% url 'register' %}">Kayıt Ol</a>
+                </li>
+            {% endif %}
+            
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {% comment %} {% if search %}
+                {% for kategori in kategoriler %}
+                    {% if search == kategori.isim %}
+                        {{search}}
+                    {% else %}
+                        
+                    {% endif %}
+                {% endfor %}
+                {% else %}
+                    Kategoriler
+                {% endif %} {% endcomment %}
+                Kategoriler
+            </a>
+            <ul class="dropdown-menu">
+                {% for kategori in kategoriler %}
+                    <li><a class="dropdown-item" href="/?search={{kategori.isim}}">{{kategori.isim}}</a></li>
+                    {% comment %} {% for profil in kategori.kullanicilar.all %}
+                        {{profil.user.username}}
+                    {% endfor %} {% endcomment %}
+                {% endfor %}
+            </ul>
+            </li>
+        </ul>
+        <form class="d-flex" method="GET" role="search">
+            <input class="form-control me-2" name="search" value="{{search}}" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        </div>
+    </div>
+    </nav>
